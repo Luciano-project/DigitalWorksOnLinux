@@ -4,6 +4,33 @@ Container Docker para executar o **DigitalWorks** (simulador de circuitos digita
 
 > Este repositório **não inclui** o DigitalWorks. O programa é descarregado do site oficial (mecanique.co.uk) durante o `docker build`, através de [download_digitalworks_3.0.5.sh](download_digitalworks_3.0.5.sh).
 
+## Quick start
+
+Só é preciso ter o Docker instalado.
+
+```sh
+git clone https://github.com/Luciano-project/EXEOnLinux.git
+cd EXEOnLinux
+
+docker build -t wine-digitalworks-web .
+
+docker run -d --rm --name digitalworks \
+  -p 127.0.0.1:6080:6080 \
+  -p 127.0.0.1:6081:6081 \
+  -v "$(pwd)/projetos":/projetos \
+  -v wine-prefix:/root/.wine \
+  wine-digitalworks-web
+```
+
+Depois, no navegador:
+
+- **Usar o DigitalWorks:** http://localhost:6080/vnc.html e clique em **Connect**.
+- **Descarregar os projetos:** http://localhost:6081/
+
+Guarde os circuitos na unidade **`P:`** para os poder descarregar. Os ficheiros também ficam na pasta `projetos/` do repositório.
+
+Para parar: `docker stop digitalworks`
+
 ## Como funciona
 
 Durante o `docker build`, o DigitalWorks 3.0.5 é descarregado e instalado em `/app`, dentro da imagem.
