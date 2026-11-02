@@ -2,6 +2,8 @@ docker build -t wine-digitalworks-web .
 
 docker run -d --rm --name digitalworks \
   -p 127.0.0.1:6080:6080 \
+  -p 127.0.0.1:6081:6081 \
   -v "$(pwd)/app":/app \
+  -v "$(pwd)/projetos":/projetos \
   -v wine-prefix:/root/.wine \
   wine-digitalworks-web
