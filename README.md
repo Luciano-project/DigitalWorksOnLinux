@@ -102,3 +102,9 @@ Por padrão, as portas só ficam acessíveis em `127.0.0.1`. Para aceder a parti
 - **A unidade `P:` não aparece**: reinicie o container. A ligação é criada a cada arranque.
 - **Atualizar ou voltar a descarregar o DigitalWorks**: `docker build --no-cache -t wine-digitalworks-web .`
 - **Repor a configuração do Wine**: `docker volume rm wine-prefix`.
+
+## Licença
+
+Este repositório é um projeto académico, criado como ferramenta de apoio a materiais de estudo. O código (Dockerfile, scripts e documentação) está sob a licença [MIT](LICENSE).
+
+A licença **não se aplica ao DigitalWorks**. O programa pertence ao seu autor (Mecanique), não é distribuído neste repositório e é descarregado diretamente do site oficial durante o `docker build`. O uso do DigitalWorks segue os termos definidos pelo autor.
