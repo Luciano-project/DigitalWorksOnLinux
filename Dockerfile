@@ -1,24 +1,25 @@
 FROM ubuntu:24.04
 
-# Evitar prompts interativos durante a instalação
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Adicionar arquitetura i386 e instalar o Wine estável do repositório oficial do Ubuntu
+# Wine + ecrã virtual + gestor de janelas + servidor VNC + noVNC
 RUN dpkg --add-architecture i386 && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
-    wine \
-    wine32 \
-    wine64 \
+    wine wine32 wine64 \
+    xvfb xfonts-base openbox \
+    x11vnc novnc websockify \
     && rm -rf /var/lib/apt/lists/*
 
-# Definir a pasta de trabalho dentro do container
 WORKDIR /app
 
-# Definir a variável de ambiente para o display (X11)
-ENV DISPLAY=:0
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
 
-# Escala da interface (96 = 100%, 144 = 150%, 192 = 200%)
-ENV WINE_DPI=144
+# Valores ajustáveis no docker run
+ENV RESOLUTION=1280x800x24 \
+    WINE_DPI=96
 
-CMD ["sh", "-c", "wine reg add 'HKCU\\Control Panel\\Desktop' /v LogPixels /t REG_DWORD /d $WINE_DPI /f && wine DigitalWorks.exe"]
+EXPOSE 6080
+
+CMD ["/usr/local/bin/start.sh"]
